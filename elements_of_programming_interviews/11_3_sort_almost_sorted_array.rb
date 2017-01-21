@@ -20,7 +20,7 @@ def sort_almost_sorted(array, offset)
 end
 
 
-#Can achieve runtime:O(n) memory:O(k) where k is number of positions number could be off by
+#Can achieve runtime:O(nlogk) (since it's O(logn) insert time in a heap!) memory:O(k) where k is number of positions number could be off by
 
 
 #really long sequence of almost sorted data.  No number is more than 2 away from it's final sorted position.
