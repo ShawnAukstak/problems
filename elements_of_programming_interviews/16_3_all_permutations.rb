@@ -2,7 +2,7 @@ require 'pp'
 require 'set'
 
 def permutations_duplicates_set(array)
-  results = Set.new
+  results = []
   permutations_duplicates_set_rec(array,0, array.length - 1,results)
   results
 end
@@ -10,7 +10,7 @@ end
 def permutations_duplicates_set_rec(array, left_index, right_index, results)
 
   if left_index == right_index
-    results.add array.dup
+    results << array.dup
     return
   end
 
