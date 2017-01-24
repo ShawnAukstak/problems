@@ -3,7 +3,7 @@
 #["fish", "swim]
 #output: [1, 3]
 
-
+#Runtime: O(n) 
 def smallest_subarray_covering_all_values(text, keywords)
   left, right = 0, 0
   result = [-Float::INFINITY, Float::INFINITY]

@@ -1,8 +1,18 @@
 class BinaryTreeNode
-  attr_accessor :value, :left, :right
+  attr_accessor :value, :left, :right, :parent
 
   def initialize(value)
     @value = value
+  end
+
+  def add_left(node)
+    @left = node
+    node.parent = self
+  end
+
+  def add_right(node)
+    @right = node
+    node.parent = self
   end
 
   def to_s
@@ -23,21 +33,21 @@ class BinaryTree
     left = BinaryTreeNode.new(50)
     right = BinaryTreeNode.new(200)
 
-    root.left = left
-    root.right = right
+    root.add_left(left)
+    root.add_right(right)
 
     left = BinaryTreeNode.new(25)
     right = BinaryTreeNode.new(75)
-    root.left.left = left
-    root.left.right = right
+    root.left.add_left left
+    root.left.add_right right
 
     left = BinaryTreeNode.new(125)
     right = BinaryTreeNode.new(350)
-    root.right.left = left
-    root.right.right = right
+    root.right.add_left left
+    root.right.add_right right
 
     left = BinaryTreeNode.new(110)
-    root.right.left.left = left
+    root.right.left.add_left left
 
     root
   end
