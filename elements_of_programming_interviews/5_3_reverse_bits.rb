@@ -16,7 +16,8 @@ def reverse_bits(word)
 end
 
 def swap_bits(a, b, word)
-    word[left], word[right] = word[right], word[left]
+  
+  word[left], word[right] = word[right], word[left]
 end
 
 puts reverse_bits(6)
