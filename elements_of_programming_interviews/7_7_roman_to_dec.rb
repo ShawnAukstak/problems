@@ -17,6 +17,9 @@ DECIMAL_VALUES = {
   "M" => 1000,
 }
 
+#Might Easier to compute right to left
+#O(n) O(1)
+#Also could have assumed only exceptions would be the allowed ones.  Much simplier logic.
 def roman_to_int(roman)
   decimal, i = 0,0
 
@@ -40,4 +43,5 @@ def roman_to_int(roman)
   decimal
 end
 
+#second
 puts roman_to_int("LIX")
