@@ -1,12 +1,14 @@
 require_relative '../lib/binary_tree.rb'
 
-
 =begin
 sequence:
 [100,50,25,nil,nil,75,nil,nil,200,125,110,nil,nil,350,nil,nil]
 
-  
-
+output -root node of binary tree:
+           100
+     50            200
+  25    75      125    350
+             110
 =end
 
 def reconstruct_tree(pre_order)
