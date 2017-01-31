@@ -1,33 +1,8 @@
-
 require_relative '../lib/graph.rb'
 require 'pp'
 
 def dijkstra_shortest_path(source, vertices)
-  distances, previouses = Hash.new(Float::INFINITY), Hash.new
-  distances[source] = 0
 
-  while !vertices.empty?
-
-    #Node with least distance will be selected first.
-    nearest_vertex = vertices.min_by do |v|
-      distances[v]
-    end
-
-    #Node will be removed from vertices
-    vertices.delete nearest_vertex
-
-    nearest_vertex.neighbors.each do |v|
-      alt = distances[nearest_vertex] + v[:weight]
-
-      if alt < distances[v[:node]]
-        distances[v[:node]] = alt
-        previouses[v[:node]] = nearest_vertex
-      end
-    end
-  end
-
-  [distances, previouses]
-end
 
 #Recreated Graph seen here
 #http://web.cecs.pdx.edu/~sheard/course/Cs163/Graphics/graph6.png
@@ -61,20 +36,5 @@ five.neighbors << { node:three, weight: 34 }
 vertices = [one,two,three,four,five]
 source = one
 
-result = dijkstra_shortest_path(source, vertices)
 
-distances = result[0]
-previouses = result[1]
-destination = five
-
-path = []
-while destination
-  path.unshift destination.value
-  destination = previouses[destination]
-end
-
-puts "Shortest path from 1 to 5: #{path.join(' -> ')}"
-
-distances.each do |k, v|
-  puts  "#{source.value} is #{v} distance from #{k.value}"
 end

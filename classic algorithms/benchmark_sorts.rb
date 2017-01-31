@@ -11,5 +11,4 @@ Benchmark.bmbm do |x|
   x.report(:m_sort) { merge_sort(array) }
   x.report(:q_sort_dup) { quick_sort(array_duplicates) }
   x.report(:m_sort_dup) { merge_sort(array_duplicates) }
-  # x.report(:i_sort) { insertion_sort(array) }
 end
