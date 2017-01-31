@@ -25,3 +25,5 @@ string = "meow meow woof meow bang woof meow woof meow"
 
 stream = StringIO.new(string)
 puts majority_element(stream)
+
+dcfarrar@live.co.uk
