@@ -1,40 +1,61 @@
 require_relative '../lib/graph.rb'
 require 'pp'
 
-def dijkstra_shortest_path(source, vertices)
+=begin
+Add an additional 'weight' to each edge. This is factored in when finding shortest path.
+=end
 
+#Monkey patch to just add an additional fix cost to an edge.
+class Edge
+  EDGE_COST = 5
+
+  def weight
+    @weight + EDGE_COST
+  end
+end
+
+#return the shortest path from source to destination, with additional weight per edge
+def dijkstra_shortest_path(source, destination, graph)
+  distances, previouses = Hash.new(Float::INFINITY), Hash.new
+  distances[source] = 0
+
+  vertices = graph.vertices.dup
+
+  while !vertices.empty?
+    closest_vertex = vertices.min_by { |v| distances[v] }
+    vertices.delete closest_vertex
+
+    if closest_vertex == destination
+      return path(previouses, destination, [])
+    end
+
+    closest_vertex.adjacent_edges.each do |e|
+      neighbor = e.destination
+      distance = e.weight + distances[closest_vertex]
+
+      if distance < distances[neighbor]
+        distances[neighbor] = distance
+        previouses[neighbor] = closest_vertex
+      end
+    end
+  end
+
+  return [] #no path to destination
+end
+
+def path(previouses, destination, path)
+  return if !destination
+
+  path(previouses,previouses[destination], path)
+  path << destination.value
+end
 
 #Recreated Graph seen here
 #http://web.cecs.pdx.edu/~sheard/course/Cs163/Graphics/graph6.png
-one = Node.new(1)
-two = Node.new(2)
-three = Node.new(3)
-four = Node.new(4)
-five = Node.new(5)
+graph = Graph::sample
+one = graph.vertices.select { |v| v.value == 1 }.first
+five = graph.vertices.select { |v| v.value == 5 }.first
 
-one.neighbors << { node:four, weight: 5 }
-four.neighbors << { node:one, weight: 5 }
+path = dijkstra_shortest_path(one, five, graph)
+pp path
 
-one.neighbors << { node:two, weight: 2 }
-two.neighbors << { node:one, weight: 2 }
-
-three.neighbors << { node:two, weight: 14 }
-two.neighbors << { node:three, weight: 14 }
-
-four.neighbors << { node:two, weight: 5 }
-two.neighbors << { node:four, weight: 5 }
-
-four.neighbors << { node:five, weight: 58 }
-five.neighbors << { node:four, weight: 58 }
-
-two.neighbors << { node:five, weight: 4 }
-five.neighbors << { node:two, weight: 4 }
-
-three.neighbors << { node:five, weight: 34 }
-five.neighbors << { node:three, weight: 34 }
-
-vertices = [one,two,three,four,five]
-source = one
-
-
-end
