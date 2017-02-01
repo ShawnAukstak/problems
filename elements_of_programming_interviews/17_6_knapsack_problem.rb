@@ -104,7 +104,6 @@ def most_valuable_knapsack_value(items, capacity)
   values[capacity]
 end
 
-
 items = [Item.new("A", 65, 20),
         Item.new("B", 35, 8),
         Item.new("C", 245, 60),
