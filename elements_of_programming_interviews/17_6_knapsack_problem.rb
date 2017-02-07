@@ -53,12 +53,7 @@ def most_valuable_knapsack_brute(items, capacity)
 
   knapsack_rec(items, [], 0, included_items, capacity)
 
-  knapsack = Knapsack.new(capacity)
-  included_items.each do |i|
-    knapsack.add_item i
-  end
-
-  knapsack
+  included_items
 end
 
 def knapsack_rec(items, curr, index, included_items, capacity)
@@ -88,7 +83,7 @@ end
 
 #returns knapsack of capacity with the highest total value
 def most_valuable_knapsack_value(items, capacity)
-  included_items = []
+  included_items = Array.new(capacity + 1) { Array.new }
 
   values = Array.new(capacity + 1, 0 )
 
@@ -96,12 +91,21 @@ def most_valuable_knapsack_value(items, capacity)
     w = capacity
 
     while(w >= items[i].weight)
-      values[w] = [values[w], values[w - items[i].weight] + items[i].value].max
+
+      if values[w - items[i].weight] + items[i].value > values[w]
+
+        #Clear included items for weight, add item, and remove
+        included_items[w].clear << items[i]
+        included_items[w] += included_items[w - items[i].weight]
+
+        values[w] = values[w - items[i].weight] + items[i].value
+      end
+
       w -= 1
     end
   end
 
-  values[capacity]
+  included_items[capacity]
 end
 
 items = [Item.new("A", 65, 20),
@@ -122,16 +126,21 @@ items = [Item.new("A", 65, 20),
         Item.new("P", 99, 10)]
 
 puts "Brute:"
-knapsack =  most_valuable_knapsack_brute(items, 130)
-knapsack.each do |i|
+included_items =  most_valuable_knapsack_brute(items, 130)
+included_items.each do |i|
   puts "#{i.name} #{i.value} #{i.weight}"
 end
 
-weight = knapsack.inject(0) { |t,i| t + i.value }
+weight = included_items.inject(0) { |t,i| t + i.value }
 puts "total weight: #{weight}"
 
-puts "\nDP: Most valuable Knapsack"
-puts most_valuable_knapsack_value(items, 130)
+puts "\nDP:"
+included_items = most_valuable_knapsack_value(items, 130)
+included_items.each do |i|
+  puts "#{i.name} #{i.value} #{i.weight}"
+end
 
+weight = included_items.inject(0) { |t,i| t + i.value }
+puts "total weight: #{weight}"
 
 
