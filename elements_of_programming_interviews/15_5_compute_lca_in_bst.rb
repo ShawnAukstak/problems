@@ -24,7 +24,7 @@ end
            100
      50            200
   25    75      125    350
-             150
+             110
 =end
 
 root = BinaryTree::sample
