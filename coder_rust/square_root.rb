@@ -1,6 +1,3 @@
-# require 'rspec/autorun'
-
-require 'prime'
 def square_root(x)
     low, hight = 0, x
     while low <= hight
